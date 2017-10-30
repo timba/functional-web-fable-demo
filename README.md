@@ -1,3 +1,7 @@
+# Functional Web with Fable Demo
+
+This demo was built from "Fable.Template" template which is installed for dotnet CLI (see "Installing the template"). The readme text below completely comes from that template. If you are interested in the demo itself only, skip "Installing the template" and "Creating a new project with the template" parts.
+
 # Fable Simple Template
 
 This template can be used to generate a simple web app with [Fable](http://fable.io/).
