@@ -3,6 +3,19 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Global.fs" />
+    <Compile Include="Counter/Types.fs" />
+    <Compile Include="Counter/State.fs" />
+    <Compile Include="Counter/View.fs" />
+    <Compile Include="Move/Types.fs" />
+    <Compile Include="Move/State.fs" />
+    <Compile Include="Move/View.fs" />
+    <Compile Include="Move/Subscriptions.fs" />
+    <Compile Include="Navbar/Types.fs" />
+    <Compile Include="Navbar/View.fs" />
+    <Compile Include="Navbar/State.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="State.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

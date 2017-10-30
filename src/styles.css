@@ -1,0 +1,13 @@
+.container {
+    padding-top: 30px;
+}
+
+.jumbotron {
+    text-align: center;
+}
+
+.output {
+    width: 50px;
+    border: 1px solid black;
+    text-align: center;
+}

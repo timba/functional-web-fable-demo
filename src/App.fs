@@ -1,39 +1,43 @@
-module FableApp
+module App.All
 
-open Fable.Core
-open Fable.Import
-open Fable.Import.React
 open Elmish
 open Elmish.React
 open Elmish.Debug
-open Fable.Helpers.React.Props
-open Fable.Import.Browser
+open Elmish.HMR
+
+open Elmish.Browser.Navigation
+open Elmish.Browser.UrlParser
+
 open Fable.Core.JsInterop
+open Fable.Helpers.React
 
-module R = Fable.Helpers.React
+open App.State
+open App.Types
+open App.Global
 
-let init() =
-    0, Cmd.none
+importAll "./styles.css"
 
-type Model = int
+let root model dispatch =
 
-type Msg = Increment | Decrement
+    let mainHtml = 
+        match model.currentPage with
+        | Counter -> Counter.View.view model.counter (CounterMsg >> dispatch)
+        | Move -> Move.View.view model.move (MoveMsg >> dispatch)
 
-let update msg count =
-  match msg with
-  | Increment -> count + 1, Cmd.none
-  | Decrement -> count - 1, Cmd.none
+    div [] [
+        Navbar.View.view model.currentPage (NavbarMsg >> dispatch)
+        br []
+        mainHtml
+    ]
 
-let view model dispatch = 
-    R.div []
-        [
-          R.button [ OnClick (fun _ -> dispatch Decrement) ] [R.str "-"]
-          R.div [] [ R.str (sprintf "%A" model) ]
-          R.button [ OnClick (fun _ -> dispatch Increment) ] [R.str "+"]
-        ]
+let subscription _ =
+        Cmd.map MoveMsg (Move.Subscriptions.subscriptions 0)
 
-Program.mkProgram init update view
+Program.mkProgram init update root
+|> Program.withSubscription subscription
+|> Program.toNavigable (parseHash pageParser) urlUpdate
+//|> Program.withHMR 
 |> Program.withReact "elmish-app"
 |> Program.withConsoleTrace
-|> Program.withDebuggerAt (Debugger.ConnectionOptions.Remote ("localhost", 8000))
+|> Program.withDebugger
 |> Program.run

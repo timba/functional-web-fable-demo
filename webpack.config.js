@@ -55,7 +55,7 @@ var plugins = isProduction
           names: ['vendor','manifest'] // Specify the common bundle names.
       }),
       new copyWebpackPlugin([
-          { from: 'src/index.html' }
+        { from: 'src/index.html' }
       ]),
       function () {
           this.plugin("done", function (stats) {
@@ -83,8 +83,11 @@ var plugins = isProduction
       }
     ]
   : [ new copyWebpackPlugin([
-          { from: 'src/index.html' }
-      ])];
+        { from: 'src/index.html' }
+  ]),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin()
+    ];
 
 module.exports = {
   devtool: "source-map",
@@ -97,6 +100,7 @@ module.exports = {
   },
   devServer: {
     contentBase: out_path,
+    hot: true,
     port: 8080
   },
   module: {
@@ -125,6 +129,13 @@ module.exports = {
           "style-loader",
           "css-loader",
           "sass-loader"
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader?url=false"
         ]
       }
     ]
